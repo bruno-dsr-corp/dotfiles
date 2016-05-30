@@ -13,7 +13,6 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'rip-rip/clang_complete'           " CPP code completion
 Plugin 'scrooloose/nerdtree'              " File navigation tree
 Plugin 'scrooloose/syntastic'             " Error checking
-Plugin 'altercation/vim-colors-solarized' " Colors
 Plugin 'valloric/youcompleteme'
 Plugin 'majutsushi/tagbar'
 " Plugin 'mbbill/undotree'
@@ -38,8 +37,11 @@ filetype plugin indent on    " required
 " Generic variables
 let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib"
 
-" Configuration
+" Theme 
 syntax enable
+colorscheme elda
+
+" Configuration
 set number
 set relativenumber
 set exrc
@@ -54,7 +56,6 @@ set shiftwidth=2
 set noexpandtab
 set autoindent
 set shiftround                  " Always indent by multiple of shiftwidth
-set expandtab                   " Always use spaces instead of tabs
 
 " Splits
 set splitbelow
@@ -107,7 +108,7 @@ highlight ColorColumn ctermbg=darkgray
 " Invisible Characters
 " nmap <leader>l :set list!<CR>   " Toggle hidden characters
 " set nolist                      " Hide by default
-" set listchars=tab:▸\ ,trail:-,extends:>,precedes:<,nbsp:⎵,eol:¬
+set listchars=tab:▸\ ,trail:-,extends:>,precedes:<,nbsp:⎵,eol:¬
 
 " Functions
 function! NumberToggle()
