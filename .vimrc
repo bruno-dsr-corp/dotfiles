@@ -10,13 +10,17 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Plugin 'rip-rip/clang_complete'           " CPP code completion
+" Plugin 'rip-rip/clang_complete'         " CPP code completion
 Plugin 'scrooloose/nerdtree'              " File navigation tree
 Plugin 'scrooloose/syntastic'             " Error checking
 Plugin 'valloric/youcompleteme'
 Plugin 'majutsushi/tagbar'
-" Plugin 'mbbill/undotree'
+Plugin 'mbbill/undotree'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'vim-airline/vim-airline'
+Plugin 'lifepillar/vim-solarized8'
+Plugin 'altercation/vim-colors-solarized'
+" Plugin 'vim-airline/vim-airline-themes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -38,14 +42,24 @@ filetype plugin indent on    " required
 let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib"
 
 " Theme 
+" set term=builtin_ansi
 syntax enable
-colorscheme elda
+set background=dark
+colorscheme solarized
+" colorscheme elda
+" colorscheme atom-dark-256
+" colorscheme solarized8_dark
+
 
 " Configuration
 set number
 set relativenumber
-set exrc
 set secure
+set binary 
+set hidden
+set showcmd
+set ruler
+
 
 " Tabbing
 set smarttab
@@ -69,6 +83,22 @@ set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 set nobackup                    " No backup file
 set noswapfile                  " No swap file
 
+" Scrolling
+set scrolloff=3                 " Keep at least 3 lines above/below
+set sidescrolloff=3             " Keep at least 3 lines left/right
+
+
+" Searching
+set incsearch                   " Incremental search
+set hlsearch                    " Highlight matches
+set ignorecase                  " Case-insensitive search
+set smartcase                   " Unless search contains uppercase letter
+set showmatch                   " Show matching bracket
+
+" Cycle through buffers
+nnoremap <silent> <Tab> :bnext<CR>
+nnoremap <silent> <S-Tab> :bprevious<CR>
+
 " NERDTree
 let NERDTreeWinPos="left"
 let NERDTreeWinSize=35
@@ -77,20 +107,20 @@ let g:NERDTreeStatusline="%f"
 
 
 " YouCompleteMe {
-let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 let g:ycm_extra_conf_globlist=['~/.vim/*']
 let g:ycm_always_populate_location_list = 0
 let g:ycm_auto_trigger=1
 let g:ycm_enable_diagnostic_highlighting=1
 let g:ycm_enable_diagnostic_signs=1
-let g:ycm_max_diagnostics_to_display=10000
+let g:ycm_max_diagnostics_to_display=100
 let g:ycm_min_num_identifier_candidate_chars=0
 let g:ycm_min_num_of_chars_for_completion=2
 let g:ycm_open_loclist_on_ycm_diags=1
 let g:ycm_show_diagnostics_ui=1
 let g:ycm_collect_identifiers_from_tags_files = 1
 
-" Syntax checking (Syntastic)
+" Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -100,6 +130,31 @@ let g:syntastic_check_on_open=1
 let g:syntastic_cpp_checkers=['cppcheck']
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_python_checkers=['pylint']
+
+" Airline
+set laststatus=2                " Alwasy display statusline
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#fnamemod=':t'
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
 
 " Column highlight
 set colorcolumn=120
@@ -125,3 +180,5 @@ endfunc
 nmap     <F8>  :TagbarToggle<CR>
 nnoremap <F9>  :NERDTreeFind<CR>
 nnoremap <F10> :NERDTreeToggle<CR>
+
+
