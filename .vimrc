@@ -1,3 +1,5 @@
+set t_Co=256
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -10,17 +12,15 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Plugin 'rip-rip/clang_complete'         " CPP code completion
 Plugin 'scrooloose/nerdtree'              " File navigation tree
-Plugin 'scrooloose/syntastic'             " Error checking
-Plugin 'valloric/youcompleteme'
+" Plugin 'scrooloose/syntastic'             " Error checking
 Plugin 'majutsushi/tagbar'
 Plugin 'mbbill/undotree'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-airline/vim-airline'
-Plugin 'lifepillar/vim-solarized8'
-Plugin 'altercation/vim-colors-solarized'
-" Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'ajh17/Spacegray.vim'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -38,18 +38,15 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 
-" Generic variables
-let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib"
-
 " Theme 
 " set term=builtin_ansi
 syntax enable
 set background=dark
-colorscheme solarized
-" colorscheme elda
-" colorscheme atom-dark-256
-" colorscheme solarized8_dark
 
+" colorscheme solarized
+" colorscheme spacegray
+" colorscheme atom-dark-256
+"
 
 " Configuration
 set number
@@ -87,6 +84,7 @@ set noswapfile                  " No swap file
 set scrolloff=3                 " Keep at least 3 lines above/below
 set sidescrolloff=3             " Keep at least 3 lines left/right
 
+let g:spacegray_underline_search = 1
 
 " Searching
 set incsearch                   " Incremental search
@@ -121,15 +119,15 @@ let g:ycm_show_diagnostics_ui=1
 let g:ycm_collect_identifiers_from_tags_files = 1
 
 " Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_check_on_open=1
-let g:syntastic_cpp_checkers=['cppcheck']
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_python_checkers=['pylint']
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list=1
+" let g:syntastic_auto_loc_list=1
+" let g:syntastic_check_on_open=1
+" let g:syntastic_cpp_checkers=['cppcheck']
+" let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_python_checkers=['pylint']
 
 " Airline
 set laststatus=2                " Alwasy display statusline
@@ -154,10 +152,30 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_theme='ayu_dark'
 
+" Markdown Syntax Support
+augroup markdown
+	au!
+	au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
+
+" Enable Elite mode, No ARRRROWWS!!!!
+let g:elite_mode=1
+
+" Disable arrow movement, resize splits instead.
+if get(g:, 'elite_mode')
+	nnoremap <Down>    :resize +2<CR>
+	nnoremap <Up>  :resize -2<CR>
+	nnoremap <Right>  :vertical resize +2<CR>
+	nnoremap <Left> :vertical resize -2<CR>
+endif
+
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Column highlight
-set colorcolumn=120
+set colorcolumn=80
 highlight ColorColumn ctermbg=darkgray
 
 " Invisible Characters
@@ -173,6 +191,8 @@ function! NumberToggle()
 		set relativenumber
 	endif
 endfunc
+
+
 
 
 
